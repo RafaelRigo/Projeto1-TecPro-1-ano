@@ -1,12 +1,12 @@
 class Obra:
     def __init__(self, nomeArq: str, aberto: bool) -> None:
-        self.anoDaObra = ""
-        self.mesDaObra = ""
-        self.estilo = ""
-        self.nomeDaObra = ""
-        self.autorDaObra = ""
-        self.valorEstimado = ""
-        self.urlFoto = ""
+        self.anoDaObra = "-"
+        self.mesDaObra = "-"
+        self.estilo = "-"
+        self.nomeDaObra = "-"
+        self.autorDaObra = "-"
+        self.valorEstimado = "-"
+        self.urlFoto = "-"
 
         self._abertoParaGravacao = aberto
         if self._abertoParaGravacao:
@@ -20,10 +20,11 @@ class Obra:
             self.anoDaObra = linha[:4].rstrip()
             self.mesDaObra = linha[4:6].rstrip()
             self.estilo = linha[6:21].rstrip()
-            self.nomeDaObra = linha[21:41].rstrip()
-            self.autorDaObra = linha[41:61].rstrip()
-            self.valorEstimado = float(linha[61:71].rstrip())
-            self.urlFoto = linha[71:171].rstrip()
+            self.nomeDaObra = linha[21:51].rstrip()
+            self.autorDaObra = linha[51:71].rstrip()
+            if linha[71:81].rstrip() != "":
+                self.valorEstimado = float(linha[71:81].rstrip())
+            self.urlFoto = linha[81:181].rstrip()
 
     def gravarCamposNoArquivo(self) -> None:
         if self._abertoParaGravacao:
@@ -31,7 +32,7 @@ class Obra:
                 self.anoDaObra.ljust(4) + 
                 self.mesDaObra.ljust(2) + 
                 self.estilo.ljust(15) +
-                self.nomeDaObra.ljust(20) + 
+                self.nomeDaObra.ljust(30) + 
                 self.autorDaObra.ljust(20) + 
                 self.valorEstimado.ljust(15) +
                 self.urlFoto.ljust(100) + '\n'
@@ -54,7 +55,7 @@ class Obra:
             self.anoDaObra.ljust(4) + 
             self.mesDaObra.ljust(2) + 
             self.estilo.ljust(15) +
-            self.nomeDaObra.ljust(20) + 
+            self.nomeDaObra.ljust(30) + 
             self.autorDaObra.ljust(20) + 
             str(self.valorEstimado).ljust(15) +
             self.urlFoto.ljust(100)

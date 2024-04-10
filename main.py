@@ -1,4 +1,4 @@
-import os, tkinter as tk, time
+import os, tkinter as tk
 from tkinter import filedialog
 from obra import Obra
 
@@ -44,11 +44,24 @@ def cadastro_de_obras():
 
             clear()
     obra.fecharArquivo()
-    print('Suas obras foram registradas com êxito!')  
-    time.sleep(5)
+    print('Suas obras foram registradas com êxito!')
     
 def listagem_de_obras():
-    pass
+    root.update()
+
+    nome_arq = selecionar_arquivo()
+    obra = Obra(nome_arq, False)
+
+    print('+-=••=-+-=••=-+-=••=--=••=--=••=--=••=--=••=-+-=••=--=••=--=••=--=••=-+-=••=--=••=--=••=-+-=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=-+')
+    print('| Ano  | Mês  | Nome da Obra                 | Autor                  | Valor            | URL                                                                                                  |')
+    print('+-=••=-+-=••=-+-=••=--=••=--=••=--=••=--=••=-+-=••=--=••=--=••=--=••=-+-=••=--=••=--=••=-+-=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=-+')
+
+    while obra.anoDaObra != '':
+        obra.lerCamposDoArquivo()
+        if obra.anoDaObra != '':
+            print(f'| {obra.anoDaObra.ljust(4)} | {obra.mesDaObra.ljust(4)} | {obra.nomeDaObra.ljust(28)} | {obra.autorDaObra.ljust(22)} | {str(obra.valorEstimado).ljust(16)} | {obra.urlFoto.ljust(100)} |')
+
+    print('+-=••=-+-=••=-+-=••=--=••=--=••=--=••=--=••=-+-=••=--=••=--=••=--=••=-+-=••=--=••=--=••=-+-=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=-+')
 
 def pagina_web_de_obras():
     pass
