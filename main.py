@@ -1,6 +1,7 @@
 import os, tkinter as tk
 from tkinter import filedialog
 from obra import Obra
+from mat import Matematica
 
 clear = lambda:os.system('cls') or None
 
@@ -67,7 +68,14 @@ def pagina_web_de_obras():
     pass
 
 def triangulo_de_pascal():
-    pass
+    num = int(input("Digite o número de linhas do triângulo de Pascal -> "))
+
+    mat = Matematica(num)
+
+    clear()
+    print("Triângulo de Pascal:")
+    for linha in mat.triangulo_de_Pascal():
+        print(linha)
 
 def menu():
     clear()
@@ -77,14 +85,14 @@ def menu():
     print('|3| - Página Web de obras de arte')
     print('|4| - Triangulo de Pascal')
     print('|0| - Sair')
-    print('>=-•-•-•-•-•-•-•-•-•-•--•-•-•-•-•-=<')
+    print('>=-•-•-•-•-•-•-•-••-•-•-•-•-•-•-•-=<')
 
 def seletor():
     continuar = lambda:input('\nDeseja continuar? [ENTER] -> ')
     opcao = ''
     while opcao != '0':
         menu()
-        opcao = input('Digite a opção desejada -> ')
+        opcao = input('\nDigite a opção desejada -> ')
         clear()
         match opcao:
             case '1': cadastro_de_obras(), continuar()
