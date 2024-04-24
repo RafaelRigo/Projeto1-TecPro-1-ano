@@ -1,4 +1,4 @@
-import os, tkinter as tk
+import os, webbrowser, tkinter as tk
 from tkinter import filedialog
 from obra import Obra
 from mat import Matematica
@@ -37,7 +37,7 @@ def cadastro_de_obras():
             estilo = input('Digite o estilo da obra -> ')
             nome_obra = input('Digite o nome da obra -> ')
             nome_autor = input('Digite o nome do autor -> ')
-            valor = input('Digite o valor estimado da obra -> ')
+            valor = input('Digite o valor estimado da obra (em reais) -> ')
             url_foto = input('Digite o URL da foto da obra -> ')
 
             obra.preencherCampos(ano, mes, estilo, nome_obra, nome_autor, valor, url_foto)
@@ -65,7 +65,138 @@ def listagem_de_obras():
     print('+-=••=-+-=••=-+-=••=--=••=--=••=--=••=--=••=-+-=••=--=••=--=••=--=••=-+-=••=--=••=--=••=-+-=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=--=••=-+')
 
 def pagina_web_de_obras():
-    pass
+    root.update()
+
+    arquivo = selecionar_arquivo()
+    os.system(f'sort {arquivo} /o ordenado.txt /+1')
+    obra = Obra('ordenado.txt', False)
+    HTML = """
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela das obras</title>
+</head>
+<style>
+html {
+    background-color: aliceblue;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+table {
+    margin: 50px auto;
+}
+
+table, tr, td, th {
+    border: 4px solid aliceblue;
+    border-collapse: collapse;
+    padding: 10px;
+    text-align: center;
+}
+
+img {
+    width: 150px;
+}
+
+th {
+    background-color: rgb(255, 220, 176);
+}
+
+td {
+    background-image: radial-gradient(cornsilk, bisque);
+}
+
+tr:nth-child(1) th {
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+}
+
+tr:nth-last-child(1) th:nth-child(1) {
+    border-bottom-left-radius: 30px;
+}
+
+tr:nth-last-child(1) th:nth-last-child(1) {
+    border-bottom-right-radius: 30px;
+}
+
+</style>
+<body>
+    <table>
+        <tr>
+            <th colspan="6">RELATÓRIO DE OBRAS DA GALERIA VIRTUAL</th>
+        </tr>
+        <tr>
+            <th>Ano/Mês</th>
+            <th>Dados</th>
+            <th>Estilo</th>
+            <th>Autor</th>
+            <th>Valor</th>
+            <th>Imagem</th>
+        </tr>
+"""
+    ano = ""
+    valor_ano = 0.0
+    valor_geral = 0.0
+
+    while obra.anoDaObra != "":
+        obra.lerCamposDoArquivo()
+        if obra.anoDaObra == ano or ano == "":
+            HTML += f"""
+        <tr>
+            <td>{obra.anoDaObra} / {obra.mesDaObra}</td>
+            <td>{obra.nomeDaObra}</td>
+            <td>{obra.estilo}</td>
+            <td>{obra.autorDaObra}</td>
+            <td>{obra.valorEstimado}</td>
+            <td><img src="{obra.urlFoto}"></td>
+        </tr>
+""" 
+            if obra.valorEstimado != "...":
+                valor_ano += obra.valorEstimado
+                valor_geral += obra.valorEstimado
+
+        else:
+            HTML += f"""
+        <tr>
+            <th colspan="4">Total</th>
+            <th>{valor_ano}</th>
+            <th></th>
+        </tr>
+"""
+            if obra.anoDaObra != "":
+                HTML += f"""
+        <tr>
+            <td>{obra.anoDaObra} / {obra.mesDaObra}</td>
+            <td>{obra.nomeDaObra}</td>
+            <td>{obra.estilo}</td>
+            <td>{obra.autorDaObra}</td>
+            <td>{obra.valorEstimado}</td>
+            <td><img src="{obra.urlFoto}"></td>
+        </tr>
+"""
+                if obra.valorEstimado != "...":
+                    valor_ano = obra.valorEstimado
+                    valor_geral += obra.valorEstimado
+
+        ano = obra.anoDaObra
+    
+    HTML += f"""
+        <tr>
+            <th colspan="4">Total Geral (R$)</th>
+            <th>{valor_geral}</th>
+            <th></th>
+    </table>
+</body>
+</html>
+"""
+    
+    arq_html = open("tabelaObras.html", "w", encoding='utf-8')
+
+    arq_html.writelines(HTML)
+    webbrowser.open_new_tab(arq_html.name)
+
+    arq_html.close()
 
 def triangulo_de_pascal():
     num = int(input("Digite o número de linhas do triângulo de Pascal -> "))

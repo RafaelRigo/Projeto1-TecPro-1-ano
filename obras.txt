@@ -1,3 +1,4 @@
-12312 sdfsdf         dfgsdfgj                      dsfgsdhfdsfh        31243425       sdfgdsfg                                                                                            
-11234  asfdfasdgasd   asDSAD                        dsfg                               sfsdf                                                                                               
-19907 feio           hitler                        adolfo              1945           chgghbxcbh                                                                                          
+200505Contemporâneo  A Semeadora                   Jerci Maccari       13500          imagens/asemeadora.jpg                                                                              
+194803Moderno        Colheita de Cacau             Portinari           5400           imagens/colheitadecacau.jpeg                                                                        
+192407Surrealismo    A Cuca                        Tarsila do Amaral   4560000        imagens/acuca.webp                                                                                  
+192402Surrealismo    Carnaval em Madureira         Tarsila do Amaral   520000         imagens/carnavalemmadureira.webp                                                                    

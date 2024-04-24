@@ -1,12 +1,12 @@
 class Obra:
     def __init__(self, nomeArq: str, aberto: bool) -> None:
-        self.anoDaObra = "-"
-        self.mesDaObra = "-"
-        self.estilo = "-"
-        self.nomeDaObra = "-"
-        self.autorDaObra = "-"
-        self.valorEstimado = "-"
-        self.urlFoto = "-"
+        self.anoDaObra = "..."
+        self.mesDaObra = "..."
+        self.estilo = "..."
+        self.nomeDaObra = "..."
+        self.autorDaObra = "..."
+        self.valorEstimado = "..."
+        self.urlFoto = "..."
 
         self._abertoParaGravacao = aberto
         if self._abertoParaGravacao:
@@ -22,9 +22,9 @@ class Obra:
             self.estilo = linha[6:21].rstrip()
             self.nomeDaObra = linha[21:51].rstrip()
             self.autorDaObra = linha[51:71].rstrip()
-            if linha[71:81].rstrip() != "":
-                self.valorEstimado = float(linha[71:81].rstrip())
-            self.urlFoto = linha[81:181].rstrip()
+            if linha[71:81].rstrip().isdigit():
+                self.valorEstimado = float(linha[71:86].rstrip())
+            self.urlFoto = linha[86:186].rstrip()
 
     def gravarCamposNoArquivo(self) -> None:
         if self._abertoParaGravacao:
